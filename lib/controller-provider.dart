@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geolocator_apple/geolocator_apple.dart';
 import 'package:geolocator_android/geolocator_android.dart';
@@ -18,7 +20,21 @@ class Controller extends ChangeNotifier {
   }
 
   getWeather( String city ) async {
-    weather = await WeatherService().currentWeather(city);
+    try {
+      weather = await WeatherService().currentWeather(city);
+    }
+    catch (e){
+      print(e);
+      Fluttertoast.showToast(
+          msg: "This is Center Short Toast",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0
+      );
+    }
     notifyListeners();
   }
 
